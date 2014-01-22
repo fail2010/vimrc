@@ -98,9 +98,9 @@ $allowed_extensions = array(
     'xmlwriter',
     'zip',
     'zlib',
-    'xcache',
     'mongo',
     'redis',
+    'phalcon',
 );
 
 $processed = array();
