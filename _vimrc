@@ -1,6 +1,6 @@
 " -----------------   Author: Ruchee
 " -----------------    Email: my@ruchee.com
-" -----------------     Date: 2014-01-22 19:04
+" -----------------     Date: 2014-01-24 19:30
 " -----------------    https://github.com/ruchee/vimrc
 
 
@@ -15,16 +15,8 @@ endif
 " 设置 path 和 tags 路径
 if g:atCompany
 else
-    " For Smarty
-    " set tags+=D:/Ruchee/WAMP/php/include/Smarty/tags
-    " For Twig
-    " set tags+=D:/Ruchee/WAMP/php/include/Twig/tags
-    " For ThinkPHP
-    " set tags+=D:/Ruchee/Files/code/projects/tp_site/ThinkPHP/tags
-    " For CodeIgniter
-    " set tags+=D:/Ruchee/Files/code/projects/ci_site/system/tags
-    " For Yii
-    " set tags+=D:/Ruchee/WAMP/php/include/Yii/tags
+    " For Laravel
+    " set tags+=D:/Ruchee/Files/code/projects/laravel_site/vendor/laravel/tags
 endif
 
 
@@ -192,8 +184,8 @@ set shiftwidth=4
 set tabstop=4
 
 " 对部分语言设置单独的缩进
-au FileType sh set shiftwidth=2
-au FileType sh set tabstop=2
+au FileType coffee,jade,sh set shiftwidth=2
+au FileType coffee,jade,sh set tabstop=2
 
 " 根据后缀名指定文件类型
 au BufRead,BufNewFile *.h   setlocal ft=c
@@ -345,10 +337,13 @@ endif
 let g:snipMate                           = {}
 " 设置补全项之间的继承关系，比如 PHP补全继承HTML的补全
 let g:snipMate.scope_aliases             = {}
+let g:snipMate.scope_aliases['c']        = 'cpp'
 let g:snipMate.scope_aliases['php']      = 'php,html'
 let g:snipMate.scope_aliases['smarty']   = 'smarty,html'
 let g:snipMate.scope_aliases['blade']    = 'blade,html'
 let g:snipMate.scope_aliases['twig']     = 'twig,html'
+let g:snipMate.scope_aliases['jst']      = 'jst,html'
+let g:snipMate.scope_aliases['less']     = 'less,css'
 let g:snipMate.scope_aliases['mustache'] = 'mustache,html'
 let g:snipMate.scope_aliases['xhtml']    = 'html'
 
@@ -372,7 +367,7 @@ let g:airline_theme = 'badwolf'                " 设置主题
 let g:syntastic_check_on_open = 1              " 默认开启
 let g:syntastic_mode_map      = {'mode': 'active',
             \'active_filetypes':  [],
-            \'passive_filetypes': ['html', 'css', 'xhtml']
+            \'passive_filetypes': ['html', 'css', 'xhtml', 'jade', 'less']
             \}                                 " 指定不需要检查的语言 [主要是因为开启这些语言的语法检查会妨碍到正常的工作]
 
 
@@ -485,12 +480,22 @@ func! Compile_Run_Code()
     exec "w"
     if &filetype == "c"
         if g:isWIN
-            exec "!tcc %:t && %:r.exe"
+            exec "!gcc -Wall -o %:r %:t && %:r.exe"
         else
-            exec "!tcc %:t && ./%:r"
+            exec "!gcc -Wall -o %:r %:t && ./%:r"
+        endif
+    elseif &filetype == "cpp"
+        if g:isWIN
+            exec "!g++ -Wall -o %:r %:t && %:r.exe"
+        else
+            exec "!g++ -Wall -o %:r %:t && ./%:r"
         endif
     elseif &filetype == "php"
         exec "!php %:t"
+    elseif &filetype == "javascript"
+        exec "!node %:t"
+    elseif &filetype == "coffee"
+        exec "!coffee -c %:t && coffee %:t"
     elseif &filetype == "sh"
         exec "!bash %:t"
     endif

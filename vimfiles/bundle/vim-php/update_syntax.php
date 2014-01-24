@@ -100,7 +100,6 @@ $allowed_extensions = array(
     'zlib',
     'mongo',
     'redis',
-    'phalcon',
 );
 
 $processed = array();

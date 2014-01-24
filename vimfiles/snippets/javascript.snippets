@@ -125,6 +125,10 @@ snippet <       { .. }
 	{ ${0} }
 snippet ?       三元运算符
 	${1} ? ${2} : ${0};
+snippet .       模拟块级作用域 [匿名函数立即调用]
+	(function () {
+	    ${0}
+	})();
 # 常用函数
 snippet ts      转换为字符串
 	toString(${1})${0}
