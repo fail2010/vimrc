@@ -1,6 +1,6 @@
 " -----------------   Author: Ruchee
 " -----------------    Email: my@ruchee.com
-" -----------------     Date: 2014-01-24 19:30
+" -----------------     Date: 2014-01-25 16:15
 " -----------------    https://github.com/ruchee/vimrc
 
 
@@ -184,8 +184,8 @@ set shiftwidth=4
 set tabstop=4
 
 " 对部分语言设置单独的缩进
-au FileType coffee,jade,sh set shiftwidth=2
-au FileType coffee,jade,sh set tabstop=2
+au FileType ruby,eruby,slim,coffee,jade,sh set shiftwidth=2
+au FileType ruby,eruby,slim,coffee,jade,sh set tabstop=2
 
 " 根据后缀名指定文件类型
 au BufRead,BufNewFile *.h   setlocal ft=c
@@ -342,6 +342,8 @@ let g:snipMate.scope_aliases['php']      = 'php,html'
 let g:snipMate.scope_aliases['smarty']   = 'smarty,html'
 let g:snipMate.scope_aliases['blade']    = 'blade,html'
 let g:snipMate.scope_aliases['twig']     = 'twig,html'
+let g:snipMate.scope_aliases['eruby']    = 'eruby,html'
+let g:snipMate.scope_aliases['scss']     = 'scss,css'
 let g:snipMate.scope_aliases['jst']      = 'jst,html'
 let g:snipMate.scope_aliases['less']     = 'less,css'
 let g:snipMate.scope_aliases['mustache'] = 'mustache,html'
@@ -367,7 +369,7 @@ let g:airline_theme = 'badwolf'                " 设置主题
 let g:syntastic_check_on_open = 1              " 默认开启
 let g:syntastic_mode_map      = {'mode': 'active',
             \'active_filetypes':  [],
-            \'passive_filetypes': ['html', 'css', 'xhtml', 'jade', 'less']
+            \'passive_filetypes': ['html', 'css', 'xhtml', 'eruby', 'slim', 'scss', 'jade', 'less']
             \}                                 " 指定不需要检查的语言 [主要是因为开启这些语言的语法检查会妨碍到正常的工作]
 
 
@@ -492,6 +494,8 @@ func! Compile_Run_Code()
         endif
     elseif &filetype == "php"
         exec "!php %:t"
+    elseif &filetype == "ruby"
+        exec "!ruby %:t"
     elseif &filetype == "javascript"
         exec "!node %:t"
     elseif &filetype == "coffee"
